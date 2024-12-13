@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Hakjum">
+    
+       <!-- 로그인: studentId와 studentName을 기준으로 학생 정보 조회 -->
+    <select id="login" resultType="Hakjum" parameterType="Hakjum">
+        SELECT studentId, studentName, koreanScore, englishScore, mathScore
+        FROM Hakjum
+        WHERE studentId = #{studentId} AND studentName = #{studentName}
+    </select>
+    
+    
+    <!-- 모든 학생 정보 조회 -->
+    <select id="findAll" resultType="Hakjum">
+        SELECT * FROM Hakjum
+    </select>
+
+    <!-- 학생 정보 저장, studentId가 없으면 자동 생성되도록 수정 -->
+   <insert id="save" parameterType="Hakjum">
+    INSERT INTO Hakjum (studentId, studentName, koreanScore, englishScore, mathScore)
+    VALUES (#{studentId}, #{studentName}, #{koreanScore}, #{englishScore}, #{mathScore})
+   </insert>
+
+    <!-- 학생 정보 삭제 -->
+    <delete id="delete" parameterType="Long">
+        DELETE FROM Hakjum WHERE studentId = #{id}
+    </delete>
+
+    <!-- 학생 정보 수정 -->
+    <update id="update" parameterType="Hakjum">
+        UPDATE Hakjum
+        SET koreanScore=#{koreanScore}, englishScore=#{englishScore}, mathScore=#{mathScore}
+        WHERE studentId = #{studentId}
+    </update>
+
+    <!-- studentId를 기준으로 학생 정보 조회-->
+   <select id="findBystudentId" resultType="Hakjum" parameterType="Long">
+    SELECT studentId, studentName, koreanScore, englishScore, mathScore
+    FROM Hakjum WHERE studentId = #{studentId}
+	</select>
+
+
+
+</mapper>
